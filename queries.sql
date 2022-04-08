@@ -53,3 +53,13 @@ SELECT species.name, SUM(species_id) FROM animals JOIN species ON species_id = s
 SELECT * FROM animals JOIN owners ON owner_id = owners.id and owners.full_name = 'Jennifer Orwell' JOIN species ON species.name = 'Digimon';
 SELECT * FROM animals JOIN owners ON owner_id = owners.id and owners.full_name = 'Dean Winchester' WHERE escape_attempts = 0;
 SELECT full_name, COUNT(owner_id) FROM animals JOIN owners ON owner_id = owners.id GROUP BY full_name ORDER BY count DESC LIMIT 1;
+
+SELECT a.name, v.name, date_of_visit FROM visits JOIN vets v ON vets_id = v.id JOIN animals a ON animals_id = a.id WHERE v.name = 'William Tatcher' ORDER BY date_of_visit DESC LIMIT 1;
+SELECT COUNT(DISTINCT animals_id) FROM visits JOIN vets v ON vets_id = v.id WHERE name = 'Stephanie Mendez';
+SELECT * FROM vets LEFT JOIN specializations ON vets_id = id;
+SELECT * FROM animals JOIN visits ON animals_id = animals.id JOIN vets ON vets.id = vets_id WHERE vets.name = 'Stephanie Mendez' AND date_of_visit BETWEEN '2020-04-01' AND '2020-08-30';
+SELECT name, COUNT(name) FROM visits JOIN animals ON animals.id = animals_id GROUP BY name ORDER BY count DESC;
+SELECT a.name, v.name, date_of_visit FROM visits JOIN vets v ON vets_id = v.id JOIN animals a ON animals_id = a.id WHERE v.name = 'Maisy Smith' ORDER BY date_of_visit ASC LIMIT 1;
+SELECT * FROM visits JOIN animals ON animals_id = animals.id JOIN vets ON vets_id = vets.id;
+SELECT COUNT(*) FROM vets v JOIN visits ON v.id = visits.vets_id LEFT JOIN specializations s ON v.id = s.vets_id LEFT JOIN animals a ON animals_id = a.id WHERE s.species_id != a.species_id OR s.species_id IS NULL;
+SELECT animals.name, COUNT(animals.name) FROM visits JOIN vets ON vets_id = vets.id JOIN animals ON animals_id = animals.id WHERE vets.name = 'Maisy Smith' GROUP BY animals.name;
