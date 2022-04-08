@@ -18,15 +18,15 @@ SELECT * FROM animals;
 BEGIN;
 UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
 UPDATE animals SET species = 'pokemon' WHERE species is NULL;
-select * from animals;
+select * FROM animals;
 COMMIT;
-select * from animals;
+select * FROM animals;
 
 BEGIN;
 DELETE FROM animals;
-select * from animals;
+select * FROM animals;
 ROLLBACK;
-select * from animals;
+select * FROM animals;
 
 BEGIN;
 DELETE FROM animals WHERE date_of_birth > '2022-1-1';
@@ -34,9 +34,9 @@ SAVEPOINT save01;
 UPDATE animals SET weight_kg = -1 * weight_kg;
 ROLLBACK to save01;
 UPDATE animals SET weight_kg = -1 * weight_kg WHERE weight_kg < 0;
-select * from animals;
+select * FROM animals;
 COMMIT;
-select * from animals;
+select * FROM animals;
 
 SELECT COUNT(*) FROM animals;
 SELECT COUNT(*) FROM animals WHERE neutered = false;
@@ -46,3 +46,10 @@ SELECT * FROM (SELECT neutered as neutered, SUM(escape_attempts) as sum_escapes 
 SELECT species, MIN(weight_kg) FROM animals GROUP BY species;
 SELECT species, AVG(escape_attempts) FROM animals  WHERE  date_of_birth >= '1990-01-01' AND date_of_birth < '2000-12-31' GROUP BY species;
 
+SELECT name, owner_id FROM animals JOIN owners ON owner_id = owner_id AND owners.full_name = 'Melody Pond';
+SELECT * FROM animals JOIN species ON species_id = species_id AND species.name = 'Pokemons';
+SELECT * FROM owners LEFT JOIN animals ON owners.id = owner_id;
+SELECT species.name, SUM(species_id) FROM animals JOIN species ON species_id = species.id GROUP BY species.name;
+SELECT * FROM animals JOIN owners ON owner_id = owners.id and owners.full_name = 'Jennifer Orwell' JOIN species ON species.name = 'Digimon';
+SELECT * FROM animals JOIN owners ON owner_id = owners.id and owners.full_name = 'Dean Winchester' WHERE escape_attempts = 0;
+SELECT full_name, COUNT(owner_id) FROM animals JOIN owners ON owner_id = owners.id GROUP BY full_name ORDER BY count DESC LIMIT 1;
